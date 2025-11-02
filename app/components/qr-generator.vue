@@ -40,7 +40,7 @@
           <UFormField
             :label="$t('url.label')"
             name="qr-url"
-            :error="urlError?.length > 0"
+            :error="urlError?.length > 0 && urlError !== $t('url.errors.protocolNote')"
           >
             <UInput
               v-model="urlInput"
@@ -51,7 +51,7 @@
               @blur="validateURL"
             />
             <template #hint>
-              <span v-if="urlError" :class="urlError.includes($t('url.errors.protocolNote')) ? 'text-blue-500 text-sm' : 'text-red-500 text-sm'">{{ urlError }}</span>
+              <span v-if="urlError" :class="urlError === $t('url.errors.protocolNote') ? 'text-blue-500 text-sm' : 'text-red-500 text-sm'">{{ urlError }}</span>
             </template>
           </UFormField>
         </div>
@@ -180,6 +180,8 @@
 </template>
 
 <script lang="ts" setup>
+import { z } from 'zod'
+
 const { t } = useI18n()
 
 type QRType = 'text' | 'url' | 'wifi' | 'calendar'
@@ -232,6 +234,72 @@ const encryptionOptions = computed(() => [
   { label: t('wifi.encryptionTypes.nopass'), value: 'nopass' }
 ])
 
+// Zod schema for URL validation
+const urlSchema = z.string()
+  .min(1)
+  .refine((val) => {
+    const trimmed = val.trim()
+    if (!trimmed) return true // Empty is valid (user might be typing)
+
+    // Check for spaces
+    if (trimmed.includes(' ')) {
+      return false
+    }
+
+    return true
+  }, { message: 'spaces' })
+  .refine((val) => {
+    const trimmed = val.trim()
+    if (!trimmed) return true
+
+    const hasProtocol = /^https?:\/\//i.test(trimmed)
+    const testUrl = hasProtocol ? trimmed : `https://${trimmed}`
+
+    try {
+      const url = new URL(testUrl)
+
+      // Validate protocol
+      if (!['http:', 'https:'].includes(url.protocol.toLowerCase())) {
+        return false
+      }
+
+      // Validate hostname - must have TLD (at least one dot, but not at start/end)
+      // Allow: domain.com, subdomain.domain.com, localhost (special case), IP addresses
+      const hostname = url.hostname
+
+      // Allow localhost and IP addresses
+      if (hostname === 'localhost' || /^(\d{1,3}\.){3}\d{1,3}$/.test(hostname)) {
+        return true
+      }
+
+      // Must have at least one dot (TLD)
+      if (!hostname.includes('.')) {
+        return false
+      }
+
+      // Must not start or end with dot
+      if (hostname.startsWith('.') || hostname.endsWith('.')) {
+        return false
+      }
+
+      // Must have valid domain structure (e.g., domain.com, not just "domain")
+      const parts = hostname.split('.')
+      if (parts.length < 2) {
+        return false
+      }
+
+      // Last part (TLD) should be at least 2 characters
+      const tld = parts[parts.length - 1]
+      if (!tld || tld.length < 2) {
+        return false
+      }
+
+      return true
+    } catch {
+      return false
+    }
+  }, { message: 'invalid' })
+
 // URL validation
 const validateURL = (): boolean => {
   urlError.value = ''
@@ -246,40 +314,11 @@ const validateURL = (): boolean => {
   // Check if URL has a protocol
   const hasProtocol = /^https?:\/\//i.test(urlString)
 
-  // Create test URL with protocol if missing
-  const testUrl = hasProtocol ? urlString : `https://${urlString}`
+  // Validate with Zod
+  const result = urlSchema.safeParse(urlString)
 
-  try {
-    const url = new URL(testUrl)
-
-    // Validate protocol (only http or https)
-    if (!['http:', 'https:'].includes(url.protocol.toLowerCase())) {
-      urlError.value = t('url.errors.protocol')
-      return false
-    }
-
-    // Validate hostname (must not be empty)
-    if (!url.hostname || url.hostname.length === 0) {
-      urlError.value = t('url.errors.domain')
-      return false
-    }
-
-    // Basic hostname validation - check for valid characters and structure
-    // Allow: domain.com, subdomain.domain.com, localhost, IP addresses
-    const hasValidChars = /^[a-z0-9.\-:[\]]+$/i.test(url.hostname)
-    if (!hasValidChars) {
-      urlError.value = t('url.errors.invalidChars')
-      return false
-    }
-
-    // If protocol was missing, show informational message
-    if (!hasProtocol) {
-      urlError.value = t('url.errors.protocolNote')
-    }
-
-    return true
-  } catch (error) {
-    // More specific error messages based on common issues
+  if (!result.success) {
+    // Handle specific error cases
     if (urlString.includes(' ')) {
       urlError.value = t('url.errors.spaces')
     } else if (!urlString.includes('.')) {
@@ -287,8 +326,16 @@ const validateURL = (): boolean => {
     } else {
       urlError.value = t('url.errors.invalid')
     }
+
     return false
   }
+
+  // If protocol was missing, show informational message
+  if (!hasProtocol) {
+    urlError.value = t('url.errors.protocolNote')
+  }
+
+  return true
 }
 
 // Format WiFi QR code string
@@ -350,14 +397,14 @@ const computeQRText = (): string => {
       return textInput.value
     case 'url':
       if (!urlInput.value.trim()) return ''
+      // Only return if URL is actually valid (no errors, or just protocol note)
+      if (urlError.value && urlError.value !== t('url.errors.protocolNote')) {
+        return ''
+      }
       // Auto-add https:// if missing (for QR generation only, don't modify input)
       let urlString = urlInput.value.trim()
       if (!urlString.match(/^https?:\/\//i)) {
         urlString = 'https://' + urlString
-      }
-      // Only return if URL is actually valid (check error message)
-      if (urlError.value && !urlError.value.includes('Note')) {
-        return ''
       }
       return urlString
     case 'wifi':

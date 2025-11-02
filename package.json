@@ -20,7 +20,8 @@
     "qr": "^0.5.2",
     "qrcode": "^1.5.4",
     "vue": "^3.5.22",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.3",
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/qrcode": "^1.5.6",
