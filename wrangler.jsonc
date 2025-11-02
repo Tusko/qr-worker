@@ -1,5 +1,5 @@
 {
-  "name": "qr-worker",
+  "name": "qr-generator",
   "compatibility_date": "2025-11-02",
   "main": ".output/server/index.mjs",
   "assets": {
