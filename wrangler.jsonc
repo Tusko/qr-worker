@@ -1,0 +1,9 @@
+{
+  "name": "qr-worker",
+  "compatibility_date": "2025-11-02",
+  "main": ".output/server/index.mjs",
+  "assets": {
+    "directory": ".output/public"
+  }
+}
+
