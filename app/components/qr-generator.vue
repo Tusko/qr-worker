@@ -2,14 +2,17 @@
   <div class="flex justify-center p-4 md:p-8">
     <UCard class="w-full max-w-2xl">
       <template #header>
-        <h2 class="text-2xl font-semibold">QR Code Generator</h2>
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl font-semibold">{{ $t('title') }}</h2>
+          <LanguageSwitcher />
+        </div>
       </template>
 
       <div class="space-y-6">
         <URadioGroup
           v-model="qrType"
           :items="qrTypeOptions"
-          legend="QR Code Type:"
+          :legend="$t('qrType')"
           orientation="horizontal"
           variant="table"
           color="neutral"
@@ -21,10 +24,10 @@
 
         <!-- Text Type -->
         <div v-if="qrType === 'text'">
-          <UFormField label="Enter text:" name="qr-text">
+          <UFormField :label="$t('text.label')" name="qr-text">
             <UTextarea
               v-model="textInput"
-              placeholder="Enter any text to generate QR code"
+              :placeholder="$t('text.placeholder')"
               :rows="3"
               size="lg"
               class="w-full"
@@ -35,28 +38,27 @@
         <!-- URL Type -->
         <div v-if="qrType === 'url'">
           <UFormField
-            label="Enter URL:"
+            :label="$t('url.label')"
             name="qr-url"
-            :error="urlError.length > 0 && !urlError.includes('Note')"
+            :error="urlError?.length > 0"
           >
             <UInput
               v-model="urlInput"
               type="url"
-              placeholder="https://domain.com/blog"
+              :placeholder="$t('url.placeholder')"
               size="lg"
               class="w-full"
               @blur="validateURL"
             />
             <template #hint>
-              <span v-if="urlError" :class="urlError.includes('Note') ? 'text-blue-500 text-sm' : 'text-red-500 text-sm'">{{ urlError }}</span>
-              <span v-else class="text-gray-500 text-sm">Enter a valid URL (e.g., https://example.com)</span>
+              <span v-if="urlError" :class="urlError.includes($t('url.errors.protocolNote')) ? 'text-blue-500 text-sm' : 'text-red-500 text-sm'">{{ urlError }}</span>
             </template>
           </UFormField>
         </div>
 
         <!-- WiFi Type -->
         <div v-if="qrType === 'wifi'" class="grid gap-4 grid-cols-2">
-          <UFormField label="Network Name (SSID):" name="wifi-ssid" required>
+          <UFormField :label="$t('wifi.ssid')" name="wifi-ssid" required>
             <UInput
               v-model="wifiData.ssid"
               placeholder="MyWiFiNetwork"
@@ -64,18 +66,18 @@
               class="w-full"
             />
           </UFormField>
-          <UFormField label="Password:" name="wifi-password">
+          <UFormField :label="$t('wifi.password')" name="wifi-password">
             <UInput
               v-model="wifiData.password"
               type="password"
-              placeholder="Enter WiFi password"
+              :placeholder="$t('wifi.passwordPlaceholder')"
               size="lg"
               class="w-full"
 
               :disabled="wifiData.encryption === 'nopass'"
             />
           </UFormField>
-          <UFormField label="Encryption Type:" name="wifi-encryption">
+          <UFormField :label="$t('wifi.encryption')" name="wifi-encryption">
             <USelect
               v-model="wifiData.encryption"
               :items="encryptionOptions"
@@ -84,22 +86,22 @@
               @change="($event: Event) => ($event.target as HTMLSelectElement).value === 'nopass' && (wifiData.password = '')"
             />
           </UFormField>
-          <UFormField label="Hidden Network:" name="wifi-hidden">
+          <UFormField :label="$t('wifi.hidden')" name="wifi-hidden">
             <USwitch v-model="wifiData.hidden" />
           </UFormField>
         </div>
 
         <!-- Calendar Event Type -->
         <div v-if="qrType === 'calendar'" class="space-y-4 grid gap-4 grid-cols-2">
-          <UFormField label="Event Title:" name="calendar-title" required class="col-span-2">
+          <UFormField :label="$t('calendar.title')" name="calendar-title" required class="col-span-2">
             <UInput
               v-model="calendarData.title"
-              placeholder="Meeting with Team"
+              :placeholder="$t('calendar.titlePlaceholder')"
               size="lg"
               class="w-full"
             />
           </UFormField>
-          <UFormField label="Start Date & Time:" name="calendar-start" required>
+          <UFormField :label="$t('calendar.startDate')" name="calendar-start" required>
             <UInput
               v-model="calendarData.startDate"
               type="datetime-local"
@@ -107,7 +109,7 @@
               size="lg"
             />
           </UFormField>
-          <UFormField label="End Date & Time:" name="calendar-end" class="relative">
+          <UFormField :label="$t('calendar.endDate')" name="calendar-end" class="relative">
             <UInput
               v-model="calendarData.endDate"
               type="datetime-local"
@@ -116,16 +118,16 @@
               :disabled="!calendarData.startDate"
             />
             <template #hint>
-              <span :hidden="!calendarData.startDate" class="text-gray-500 text-xs absolute -bottom-1 left-0">Optional - leave empty to use start date</span>
+              <span :hidden="!calendarData.startDate" class="text-gray-500 text-xs absolute -bottom-1 left-0">{{ $t('calendar.endDateHint') }}</span>
             </template>
           </UFormField>
         </div>
 
         <!-- Color Customization -->
         <div class="space-y-4  pt-4 flex gap-4 items-center">
-          <h3 class="text-lg font-semibold m-0">Customize Colors</h3>
-          <ColorPicker v-model="qrColors.dark" label="Content" class="m-0 flex-1" />
-          <ColorPicker v-model="qrColors.light" label="Background" class="m-0 flex-1" />
+          <h3 class="text-lg font-semibold m-0">{{ $t('colors.customize') }}</h3>
+          <ColorPicker v-model="qrColors.dark" :label="$t('colors.content')" class="m-0 flex-1" />
+          <ColorPicker v-model="qrColors.light" :label="$t('colors.background')" class="m-0 flex-1" />
         </div>
 
         <div class="flex justify-center items-center min-h-[320px] p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
@@ -133,12 +135,12 @@
             <canvas ref="qrCanvas" class="max-w-full h-auto" />
           </div>
           <div v-else class="text-center text-gray-500 dark:text-gray-400 italic">
-            <p>Configure options above to generate QR code</p>
+            <p>{{ $t('qrDisplay.noConfig') }}</p>
           </div>
         </div>
 
         <div class="space-y-4">
-          <h3 class="text-xl font-semibold text-center">Download QR Code</h3>
+          <h3 class="text-xl font-semibold text-center">{{ $t('download.title') }}</h3>
           <div class="flex flex-wrap gap-4">
             <UButton
               @click="downloadQR('png')"
@@ -148,7 +150,7 @@
               icon="i-heroicons-arrow-down-tray"
               class="flex-1 justify-center"
             >
-              Download PNG
+              {{ $t('download.png') }}
             </UButton>
             <UButton
               @click="downloadQR('svg')"
@@ -158,7 +160,7 @@
               icon="i-heroicons-arrow-down-tray"
               class="flex-1 justify-center"
             >
-              Download SVG
+              {{ $t('download.svg') }}
             </UButton>
             <UButton
               @click="downloadQR('pdf')"
@@ -168,7 +170,7 @@
               icon="i-heroicons-arrow-down-tray"
               class="flex-1 justify-center"
             >
-              Download PDF
+              {{ $t('download.pdf') }}
             </UButton>
           </div>
         </div>
@@ -178,6 +180,8 @@
 </template>
 
 <script lang="ts" setup>
+const { t } = useI18n()
+
 type QRType = 'text' | 'url' | 'wifi' | 'calendar'
 
 const qrType = ref<QRType>('text')
@@ -215,17 +219,17 @@ const qrColors = ref({
 
 // QR Type options
 const qrTypeOptions = computed(() => [
-  { label: 'Text', value: 'text', icon: 'i-heroicons-text-square' },
-  { label: 'URL', value: 'url', icon: 'i-heroicons-link' },
-  { label: 'WiFi', value: 'wifi', icon: 'i-heroicons-wifi' },
-  { label: 'Calendar Event', value: 'calendar', icon: 'i-heroicons-calendar' }
+  { label: t('types.text'), value: 'text', icon: 'i-heroicons-text-square' },
+  { label: t('types.url'), value: 'url', icon: 'i-heroicons-link' },
+  { label: t('types.wifi'), value: 'wifi', icon: 'i-heroicons-wifi' },
+  { label: t('types.calendar'), value: 'calendar', icon: 'i-heroicons-calendar' }
 ])
 
 // Encryption options
 const encryptionOptions = computed(() => [
-  { label: 'WPA/WPA2', value: 'WPA' },
-  { label: 'WEP', value: 'WEP' },
-  { label: 'No Password', value: 'nopass' }
+  { label: t('wifi.encryptionTypes.wpa'), value: 'WPA' },
+  { label: t('wifi.encryptionTypes.wep'), value: 'WEP' },
+  { label: t('wifi.encryptionTypes.nopass'), value: 'nopass' }
 ])
 
 // URL validation
@@ -250,13 +254,13 @@ const validateURL = (): boolean => {
 
     // Validate protocol (only http or https)
     if (!['http:', 'https:'].includes(url.protocol.toLowerCase())) {
-      urlError.value = 'URL must use http:// or https:// protocol'
+      urlError.value = t('url.errors.protocol')
       return false
     }
 
     // Validate hostname (must not be empty)
     if (!url.hostname || url.hostname.length === 0) {
-      urlError.value = 'Please enter a valid URL with a domain name'
+      urlError.value = t('url.errors.domain')
       return false
     }
 
@@ -264,24 +268,24 @@ const validateURL = (): boolean => {
     // Allow: domain.com, subdomain.domain.com, localhost, IP addresses
     const hasValidChars = /^[a-z0-9.\-:[\]]+$/i.test(url.hostname)
     if (!hasValidChars) {
-      urlError.value = 'Domain name contains invalid characters'
+      urlError.value = t('url.errors.invalidChars')
       return false
     }
 
     // If protocol was missing, show informational message
     if (!hasProtocol) {
-      urlError.value = 'Note: https:// will be added automatically'
+      urlError.value = t('url.errors.protocolNote')
     }
 
     return true
   } catch (error) {
     // More specific error messages based on common issues
     if (urlString.includes(' ')) {
-      urlError.value = 'URL cannot contain spaces'
+      urlError.value = t('url.errors.spaces')
     } else if (!urlString.includes('.')) {
-      urlError.value = 'Please enter a valid URL with a domain name'
+      urlError.value = t('url.errors.domain')
     } else {
-      urlError.value = 'Please enter a valid URL'
+      urlError.value = t('url.errors.invalid')
     }
     return false
   }

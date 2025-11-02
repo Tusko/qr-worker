@@ -1,23 +1,21 @@
-# Nuxt Minimal Starter
+# QR Worker
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A QR code generator web application built with Nuxt 4, designed to run on Cloudflare Workers. Features multi-language support, customizable QR codes, and PDF export capabilities.
+
+## Features
+
+- Generate QR codes with customizable colors and options
+- Multi-language support (English, Ukrainian, Polish, Spanish, Italian, German)
+- PDF export functionality
+- Modern UI built with Nuxt UI
+- Deployed on Cloudflare Workers
 
 ## Setup
 
 Make sure to install dependencies:
 
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
 yarn install
-
-# bun
-bun install
 ```
 
 ## Development Server
@@ -25,17 +23,13 @@ bun install
 Start the development server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
+yarn serve
+```
 
-# pnpm
-pnpm dev
+Or run with Cloudflare Workers locally:
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
+```bash
+yarn serve:cf
 ```
 
 ## Production
@@ -43,33 +37,27 @@ bun run dev
 Build the application for production:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
 yarn build
+```
 
-# bun
-bun run build
+Generate static site:
+
+```bash
+yarn generate
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
 yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## Deployment
+
+Deploy to Cloudflare Workers:
+
+```bash
+yarn deploy
+```
+
+Check out the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) and [Cloudflare Workers documentation](https://developers.cloudflare.com/workers/) for more information.

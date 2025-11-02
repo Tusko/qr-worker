@@ -1,0 +1,62 @@
+{
+  "loading": "Caricamento generatore di codici QR...",
+  "title": "Generatore di codici QR",
+  "qrType": "Tipo di codice QR:",
+  "types": {
+    "text": "Testo",
+    "url": "URL",
+    "wifi": "WiFi",
+    "calendar": "Evento calendario"
+  },
+  "text": {
+    "label": "Inserisci testo:",
+    "placeholder": "Inserisci qualsiasi testo per generare il codice QR"
+  },
+  "url": {
+    "label": "Inserisci URL:",
+    "placeholder": "https://domain.com/blog",
+    "hint": "Inserisci un URL valido (es. https://example.com)",
+    "errors": {
+      "protocol": "L'URL deve utilizzare il protocollo http:// o https://",
+      "domain": "Inserisci un URL valido con un nome di dominio",
+      "invalidChars": "Il nome di dominio contiene caratteri non validi",
+      "spaces": "L'URL non può contenere spazi",
+      "invalid": "Inserisci un URL valido",
+      "protocolNote": "Nota: https:// verrà aggiunto automaticamente"
+    }
+  },
+  "wifi": {
+    "ssid": "Nome rete (SSID):",
+    "password": "Password:",
+    "encryption": "Tipo di crittografia:",
+    "hidden": "Rete nascosta:",
+    "passwordPlaceholder": "Inserisci la password WiFi",
+    "encryptionTypes": {
+      "wpa": "WPA/WPA2",
+      "wep": "WEP",
+      "nopass": "Nessuna password"
+    }
+  },
+  "calendar": {
+    "title": "Titolo evento:",
+    "startDate": "Data e ora di inizio:",
+    "endDate": "Data e ora di fine:",
+    "titlePlaceholder": "Riunione con il team",
+    "endDateHint": "Opzionale - lascia vuoto per usare la data di inizio"
+  },
+  "colors": {
+    "customize": "Personalizza colori",
+    "content": "Contenuto",
+    "background": "Sfondo"
+  },
+  "qrDisplay": {
+    "noConfig": "Configura le opzioni sopra per generare il codice QR"
+  },
+  "download": {
+    "title": "Scarica codice QR",
+    "png": "Scarica PNG",
+    "svg": "Scarica SVG",
+    "pdf": "Scarica PDF"
+  }
+}
+

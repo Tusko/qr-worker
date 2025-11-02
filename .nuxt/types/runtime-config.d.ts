@@ -19,7 +19,89 @@ import { RuntimeConfig as UserRuntimeConfig, PublicRuntimeConfig as UserPublicRu
    },
   }
   interface SharedPublicRuntimeConfig {
+   i18n: {
+      baseUrl: string,
 
+      defaultLocale: string,
+
+      rootRedirect: any,
+
+      redirectStatusCode: number,
+
+      skipSettingLocaleOnNavigate: boolean,
+
+      locales: Array<{
+
+      }>,
+
+      detectBrowserLanguage: {
+         alwaysRedirect: boolean,
+
+         cookieCrossOrigin: boolean,
+
+         cookieDomain: any,
+
+         cookieKey: string,
+
+         cookieSecure: boolean,
+
+         fallbackLocale: string,
+
+         redirectOn: string,
+
+         useCookie: boolean,
+      },
+
+      experimental: {
+         localeDetector: string,
+
+         typedPages: boolean,
+
+         typedOptionsAndMessages: boolean,
+
+         alternateLinkCanonicalQueries: boolean,
+
+         devCache: boolean,
+
+         cacheLifetime: any,
+
+         stripMessagesPayload: boolean,
+
+         preload: boolean,
+
+         strictSeo: boolean,
+
+         nitroContextDetection: boolean,
+
+         httpCacheDuration: number,
+      },
+
+      domainLocales: {
+         en: {
+            domain: string,
+         },
+
+         uk: {
+            domain: string,
+         },
+
+         pl: {
+            domain: string,
+         },
+
+         es: {
+            domain: string,
+         },
+
+         it: {
+            domain: string,
+         },
+
+         de: {
+            domain: string,
+         },
+      },
+   },
   }
 declare module '@nuxt/schema' {
   interface RuntimeConfig extends UserRuntimeConfig {}

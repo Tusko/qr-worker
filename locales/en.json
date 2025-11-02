@@ -1,0 +1,62 @@
+{
+  "loading": "Loading QR Code Generator...",
+  "title": "QR Code Generator",
+  "qrType": "QR Code Type:",
+  "types": {
+    "text": "Text",
+    "url": "URL",
+    "wifi": "WiFi",
+    "calendar": "Calendar Event"
+  },
+  "text": {
+    "label": "Enter text:",
+    "placeholder": "Enter any text to generate QR code"
+  },
+  "url": {
+    "label": "Enter URL:",
+    "placeholder": "https://domain.com/blog",
+    "hint": "Enter a valid URL (e.g., https://example.com)",
+    "errors": {
+      "protocol": "URL must use http:// or https:// protocol",
+      "domain": "Please enter a valid URL with a domain name",
+      "invalidChars": "Domain name contains invalid characters",
+      "spaces": "URL cannot contain spaces",
+      "invalid": "Please enter a valid URL",
+      "protocolNote": "Note: https:// will be added automatically"
+    }
+  },
+  "wifi": {
+    "ssid": "Network Name (SSID):",
+    "password": "Password:",
+    "encryption": "Encryption Type:",
+    "hidden": "Hidden Network:",
+    "passwordPlaceholder": "Enter WiFi password",
+    "encryptionTypes": {
+      "wpa": "WPA/WPA2",
+      "wep": "WEP",
+      "nopass": "No Password"
+    }
+  },
+  "calendar": {
+    "title": "Event Title:",
+    "startDate": "Start Date & Time:",
+    "endDate": "End Date & Time:",
+    "titlePlaceholder": "Meeting with Team",
+    "endDateHint": "Optional - leave empty to use start date"
+  },
+  "colors": {
+    "customize": "Customize Colors",
+    "content": "Content",
+    "background": "Background"
+  },
+  "qrDisplay": {
+    "noConfig": "Configure options above to generate QR code"
+  },
+  "download": {
+    "title": "Download QR Code",
+    "png": "Download PNG",
+    "svg": "Download SVG",
+    "pdf": "Download PDF"
+  }
+}
+

@@ -1,0 +1,62 @@
+{
+  "loading": "Завантаження генератора QR-кодів...",
+  "title": "Генератор QR-кодів",
+  "qrType": "Тип QR-коду:",
+  "types": {
+    "text": "Текст",
+    "url": "URL",
+    "wifi": "WiFi",
+    "calendar": "Подія календаря"
+  },
+  "text": {
+    "label": "Введіть текст:",
+    "placeholder": "Введіть будь-який текст для генерації QR-коду"
+  },
+  "url": {
+    "label": "Введіть URL:",
+    "placeholder": "https://domain.com/blog",
+    "hint": "Введіть дійсну URL-адресу (наприклад, https://example.com)",
+    "errors": {
+      "protocol": "URL повинна використовувати протокол http:// або https://",
+      "domain": "Будь ласка, введіть дійсну URL-адресу з доменним ім'ям",
+      "invalidChars": "Доменне ім'я містить недопустимі символи",
+      "spaces": "URL не може містити пробіли",
+      "invalid": "Будь ласка, введіть дійсну URL-адресу",
+      "protocolNote": "Примітка: https:// буде додано автоматично"
+    }
+  },
+  "wifi": {
+    "ssid": "Назва мережі (SSID):",
+    "password": "Пароль:",
+    "encryption": "Тип шифрування:",
+    "hidden": "Прихована мережа:",
+    "passwordPlaceholder": "Введіть пароль WiFi",
+    "encryptionTypes": {
+      "wpa": "WPA/WPA2",
+      "wep": "WEP",
+      "nopass": "Без пароля"
+    }
+  },
+  "calendar": {
+    "title": "Назва події:",
+    "startDate": "Дата та час початку:",
+    "endDate": "Дата та час закінчення:",
+    "titlePlaceholder": "Зустріч з командою",
+    "endDateHint": "Необов'язково - залиште порожнім, щоб використати дату початку"
+  },
+  "colors": {
+    "customize": "Налаштування кольорів",
+    "content": "Контент",
+    "background": "Фон"
+  },
+  "qrDisplay": {
+    "noConfig": "Налаштуйте опції вище, щоб згенерувати QR-код"
+  },
+  "download": {
+    "title": "Завантажити QR-код",
+    "png": "Завантажити PNG",
+    "svg": "Завантажити SVG",
+    "pdf": "Завантажити PDF"
+  }
+}
+
