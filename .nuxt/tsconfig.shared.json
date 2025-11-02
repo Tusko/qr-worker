@@ -85,6 +85,15 @@
       "vue-demi": [
         "../node_modules/nuxt/dist/app/compat/vue-demi"
       ],
+      "#ui": [
+        "../node_modules/@nuxt/ui/dist/runtime"
+      ],
+      "#ui/*": [
+        "../node_modules/@nuxt/ui/dist/runtime/*"
+      ],
+      "#color-mode-options": [
+        "./color-mode-options.mjs"
+      ],
       "#vue-router": [
         "../node_modules/vue-router"
       ],
@@ -95,7 +104,7 @@
         "./imports"
       ],
       "#app-manifest": [
-        "./manifest/meta/48df41d0-9ea4-4c18-bf04-e7bd3c8e689d"
+        "./manifest/meta/dev.json"
       ],
       "#build": [
         "."

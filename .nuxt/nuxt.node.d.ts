@@ -1,3 +1,5 @@
+/// <reference types="@nuxtjs/google-fonts" />
+/// <reference types="@nuxt/ui" />
 /// <reference types="@nuxt/devtools" />
 /// <reference types="@nuxt/telemetry" />
 /// <reference path="types/modules.d.ts" />

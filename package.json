@@ -4,19 +4,25 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "npx wrangler dev",
+    "serve": "nuxt dev",
+    "serve:cf": "npx wrangler dev",
     "deploy": "npx wrangler deploy",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@nuxt/ui": "^4.1.0",
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "jspdf": "^3.0.3",
     "nuxt": "^4.2.0",
     "qr": "^0.5.2",
+    "qrcode": "^1.5.4",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
+    "@types/qrcode": "^1.5.6",
     "wrangler": "^4.45.3"
   }
 }
