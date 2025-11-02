@@ -8,13 +8,27 @@ const currentLocale = computed({
   }
 })
 
-console.log(locales.value)
+const flagMap: Record<string, string> = {
+  en: '🇬🇧',
+  uk: '🇺🇦',
+  pl: '🇵🇱',
+  es: '🇪🇸',
+  it: '🇮🇹',
+  de: '🇩🇪'
+}
+
+const localesWithFlags = computed(() => {
+  return locales.value.map(loc => ({
+    ...loc,
+    name: `${flagMap[loc.code] || '🌐'} ${loc.name}`
+  }))
+})
 </script>
 
 <template>
   <USelectMenu
     v-model="currentLocale"
-    :items="locales"
+    :items="localesWithFlags"
     label-key="name"
     value-key="code"
     class="w-40"
