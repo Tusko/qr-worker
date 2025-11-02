@@ -13,8 +13,8 @@
           v-model="qrType"
           :items="qrTypeOptions"
           :legend="$t('qrType')"
-          orientation="horizontal"
-          variant="table"
+          :orientation="radioOrientation"
+          :variant="radioVariant"
           color="neutral"
           class="w-full"
           :ui="{
@@ -141,14 +141,14 @@
 
         <div class="space-y-4">
           <h3 class="text-xl font-semibold text-center">{{ $t('download.title') }}</h3>
-          <div class="flex flex-wrap gap-4">
+          <div class="flex flex-col md:flex-row gap-4">
             <UButton
               @click="downloadQR('png')"
               :disabled="!qrText"
               color="primary"
               size="lg"
               icon="i-heroicons-arrow-down-tray"
-              class="flex-1 justify-center"
+              class="w-full md:flex-1 justify-center"
             >
               {{ $t('download.png') }}
             </UButton>
@@ -158,7 +158,7 @@
               color="secondary"
               size="lg"
               icon="i-heroicons-arrow-down-tray"
-              class="flex-1 justify-center"
+              class="w-full md:flex-1 justify-center"
             >
               {{ $t('download.svg') }}
             </UButton>
@@ -168,7 +168,7 @@
               color="neutral"
               size="lg"
               icon="i-heroicons-arrow-down-tray"
-              class="flex-1 justify-center"
+              class="w-full md:flex-1 justify-center"
             >
               {{ $t('download.pdf') }}
             </UButton>
@@ -226,6 +226,12 @@ const qrTypeOptions = computed(() => [
   { label: t('types.wifi'), value: 'wifi', icon: 'i-heroicons-wifi' },
   { label: t('types.calendar'), value: 'calendar', icon: 'i-heroicons-calendar' }
 ])
+
+// Responsive radio group settings
+const windowWidth = ref(0)
+const isMobile = computed(() => windowWidth.value < 767)
+const radioOrientation = computed(() => isMobile.value ? 'vertical' : 'horizontal')
+const radioVariant = computed(() => isMobile.value ? 'card' : 'table')
 
 // Encryption options
 const encryptionOptions = computed(() => [
@@ -565,16 +571,34 @@ watch(urlInput, () => {
   }
 })
 
+// Window resize handler for responsive behavior
+const updateWindowWidth = () => {
+  if (typeof window !== 'undefined') {
+    windowWidth.value = window.innerWidth
+  }
+}
+
 // Generate QR code on mount if there's initial data
 onMounted(async () => {
   // Dynamically import QRCode only on client side
   if (typeof window !== 'undefined') {
+    // Initialize window width
+    updateWindowWidth()
+    window.addEventListener('resize', updateWindowWidth)
+
     QRCode.value = (await import('qrcode')).default
     await nextTick()
     const computedText = computeQRText()
     if (computedText) {
       await generateQRCode()
     }
+  }
+})
+
+// Cleanup on unmount
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', updateWindowWidth)
   }
 })
 </script>

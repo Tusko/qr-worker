@@ -9,7 +9,7 @@ export default defineNuxtConfig({
       titleTemplate: '%s | QR Worker',
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' },
         {
           name: 'keywords',
           content: 'QR code generator, QR code maker, free QR code, QR code online, QR code creator, generate QR code, custom QR code, WiFi QR code, calendar QR code'
