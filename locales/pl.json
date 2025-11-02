@@ -57,6 +57,10 @@
     "png": "Pobierz PNG",
     "svg": "Pobierz SVG",
     "pdf": "Pobierz PDF"
+  },
+  "seo": {
+    "title": "Generator kodów QR - Darmowy generator kodów QR online",
+    "description": "Darmowy generator kodów QR online. Twórz kody QR dla tekstu, adresów URL, sieci WiFi i wydarzeń kalendarzowych. Dostosuj kolory, pobierz jako PNG, SVG lub PDF. Obsługa wielu języków."
   }
 }
 

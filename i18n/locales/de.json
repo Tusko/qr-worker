@@ -57,6 +57,10 @@
     "png": "PNG herunterladen",
     "svg": "SVG herunterladen",
     "pdf": "PDF herunterladen"
+  },
+  "seo": {
+    "title": "QR-Code-Generator - Kostenloser QR-Code-Generator online",
+    "description": "Kostenloser QR-Code-Generator online. Erstellen Sie QR-Codes für Text, URLs, WiFi-Netzwerke und Kalenderereignisse. Passen Sie Farben an, laden Sie als PNG, SVG oder PDF herunter. Mehrsprachige Unterstützung."
   }
 }
 

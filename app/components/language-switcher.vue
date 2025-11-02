@@ -1,16 +1,21 @@
 <script setup lang="ts">
 const { locale, locales, setLocale } = useI18n()
+const switchLocalePath = useSwitchLocalePath()
 
 const currentLocale = computed({
   get: () => locale.value,
-  set: (value: string) => {
-    setLocale(value as 'en' | 'uk' | 'pl' | 'es' | 'it' | 'de')
+  set: async (value: string) => {
+    const newLocale = value as 'en' | 'uk' | 'pl' | 'es' | 'it' | 'de'
+    // Set locale first to ensure translations are loaded (with lazy: true)
+    await setLocale(newLocale)
+    const path = switchLocalePath(newLocale)
+    await navigateTo(path)
   }
 })
 
 const flagMap: Record<string, string> = {
-  en: '🇬🇧',
   uk: '🇺🇦',
+  en: '🇬🇧',
   pl: '🇵🇱',
   es: '🇪🇸',
   it: '🇮🇹',

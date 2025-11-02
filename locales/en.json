@@ -57,6 +57,10 @@
     "png": "Download PNG",
     "svg": "Download SVG",
     "pdf": "Download PDF"
+  },
+  "seo": {
+    "title": "QR Code Generator - Free Online QR Code Maker",
+    "description": "Free online QR code generator. Create QR codes for text, URLs, WiFi networks, and calendar events. Customize colors, download as PNG, SVG, or PDF. Multi-language support."
   }
 }
 

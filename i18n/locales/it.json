@@ -57,6 +57,10 @@
     "png": "Scarica PNG",
     "svg": "Scarica SVG",
     "pdf": "Scarica PDF"
+  },
+  "seo": {
+    "title": "Generatore di codici QR - Generatore gratuito di codici QR online",
+    "description": "Generatore gratuito di codici QR online. Crea codici QR per testo, URL, reti WiFi ed eventi del calendario. Personalizza i colori, scarica come PNG, SVG o PDF. Supporto multilingua."
   }
 }
 

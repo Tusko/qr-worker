@@ -123,13 +123,6 @@
           </UFormField>
         </div>
 
-        <!-- Color Customization -->
-        <div class="space-y-4  pt-4 flex gap-4 items-center">
-          <h3 class="text-lg font-semibold m-0">{{ $t('colors.customize') }}</h3>
-          <ColorPicker v-model="qrColors.dark" :label="$t('colors.content')" class="m-0 flex-1" />
-          <ColorPicker v-model="qrColors.light" :label="$t('colors.background')" class="m-0 flex-1" />
-        </div>
-
         <div class="flex justify-center items-center min-h-[320px] p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
           <div v-if="qrText" class="flex justify-center items-center p-4">
             <canvas ref="qrCanvas" class="max-w-full h-auto" />
@@ -137,6 +130,13 @@
           <div v-else class="text-center text-gray-500 dark:text-gray-400 italic">
             <p>{{ $t('qrDisplay.noConfig') }}</p>
           </div>
+        </div>
+
+        <!-- Color Customization -->
+        <div class="space-y-4  pt-4 flex gap-4 items-center border-b border-gray-200 dark:border-gray-800 pb-8">
+          <h3 class="text-lg font-semibold m-0">{{ $t('colors.customize') }}</h3>
+          <ColorPicker v-model="qrColors.dark" :label="$t('colors.content')" class="m-0 flex-1" />
+          <ColorPicker v-model="qrColors.light" :label="$t('colors.background')" class="m-0 flex-1" />
         </div>
 
         <div class="space-y-4">
